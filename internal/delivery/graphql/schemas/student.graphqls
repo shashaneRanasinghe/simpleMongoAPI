@@ -1,0 +1,54 @@
+type Query {
+    getAllStudents: StudentListResponse!
+    getStudent(studentID: ID!): StudentResponse!
+    searchStudent(searchString: String, pagination: Pagination, sortBy: SortBy): StudentSearchResponse!
+}
+
+type Mutation {
+    createStudent(student: StudentInput): StudentResponse!
+    updateStudent(student: StudentInput): StudentResponse!
+    deleteStudent(studentID: ID!): StudentDeleteResponse!
+}
+
+type Student {
+    id: ID!
+    firstname: String!
+    lastname: String!
+    year: Int!
+}
+
+input StudentInput {
+    id: ID
+    firstname: String
+    lastname: String
+    year: Int
+}
+
+type StudentResponse {
+    status : String!
+    data: Student
+    message: String!
+}
+
+type StudentListResponse {
+    status : String!
+    data: [Student]!
+    message: String!
+}
+
+type StudentSearchResponse {
+    status : String!
+    data: StudentSearch
+    message: String!
+}
+
+type StudentSearch {
+    totalElements : Int!
+    data : [Student]!
+}
+
+type StudentDeleteResponse {
+    status: String!
+    ID: String
+    message: String!
+}

@@ -6,16 +6,17 @@ import (
 	"github.com/shashaneRanasinghe/simpleMongoAPI/internal/repository"
 	"github.com/shashaneRanasinghe/simpleMongoAPI/pkg/consts"
 	"github.com/tryfix/log"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type StudentUsecase interface {
 	GetAllStudents(ctx context.Context) ([]models.Student, error)
-	GetStudent(ctx context.Context, id string) (*models.Student, error)
+	GetStudent(ctx context.Context, id primitive.ObjectID) (*models.Student, error)
 	CreateStudent(ctx context.Context, student *models.Student) (*models.Student, error)
 	UpdateStudent(ctx context.Context, student *models.Student) (*models.Student, error)
 	SearchStudent(ctx context.Context, searchString string, pagination models.Pagination,
 		sortBy models.SortBy) (*models.StudentSearchData, error)
-	DeleteStudent(ctx context.Context, id string) error
+	DeleteStudent(ctx context.Context, id primitive.ObjectID) error
 }
 
 type studentUsecase struct {
@@ -38,7 +39,7 @@ func (s studentUsecase) GetAllStudents(ctx context.Context) ([]models.Student, e
 	return studentList, nil
 }
 
-func (s studentUsecase) GetStudent(ctx context.Context, id string) (*models.Student, error) {
+func (s studentUsecase) GetStudent(ctx context.Context, id primitive.ObjectID) (*models.Student, error) {
 
 	student, err := s.studentRepo.FindStudent(ctx, id)
 	if err != nil {
@@ -79,7 +80,7 @@ func (s studentUsecase) SearchStudent(ctx context.Context, searchString string, 
 	return studentList, nil
 }
 
-func (s studentUsecase) DeleteStudent(ctx context.Context, id string) error {
+func (s studentUsecase) DeleteStudent(ctx context.Context, id primitive.ObjectID) error {
 
 	err := s.studentRepo.DeleteStudent(ctx, id)
 	if err != nil {

@@ -13,12 +13,12 @@ import (
 
 type StudentRepository interface {
 	FindAllStudents(ctx context.Context) ([]models.Student, error)
-	FindStudent(ctx context.Context, id string) (*models.Student, error)
+	FindStudent(ctx context.Context, id primitive.ObjectID) (*models.Student, error)
 	CreateStudent(ctx context.Context, student *models.Student) (*models.Student, error)
 	UpdateStudent(ctx context.Context, student *models.Student) (*models.Student, error)
 	SearchStudent(ctx context.Context, searchString string, pagination models.Pagination,
 		sortBy models.SortBy) (*models.StudentSearchData, error)
-	DeleteStudent(ctx context.Context, id string) error
+	DeleteStudent(ctx context.Context, id primitive.ObjectID) error
 }
 
 type studentRepo struct {
@@ -56,15 +56,10 @@ func (s *studentRepo) FindAllStudents(ctx context.Context) ([]models.Student, er
 	return results, nil
 }
 
-func (s *studentRepo) FindStudent(ctx context.Context, id string) (*models.Student, error) {
+func (s *studentRepo) FindStudent(ctx context.Context, id primitive.ObjectID) (*models.Student, error) {
 	var result models.Student
 
-	obID, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		log.Error(consts.ObjectIdConvertError, err)
-	}
-
-	err = s.collection.FindOne(ctx, bson.M{"_id": obID}).Decode(&result)
+	err := s.collection.FindOne(ctx, bson.M{"_id": id}).Decode(&result)
 	if err != nil {
 		log.Error(err)
 		return nil, err
@@ -101,15 +96,9 @@ func (s *studentRepo) UpdateStudent(ctx context.Context, student *models.Student
 	return student, nil
 }
 
-func (s *studentRepo) DeleteStudent(ctx context.Context, id string) error {
+func (s *studentRepo) DeleteStudent(ctx context.Context, id primitive.ObjectID) error {
 
-	obID, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		log.Error(err)
-		return err
-	}
-
-	result, err := s.collection.DeleteOne(ctx, bson.M{"_id": obID})
+	result, err := s.collection.DeleteOne(ctx, bson.M{"_id": id})
 	if err != nil {
 		log.Error(err)
 		return err
@@ -128,7 +117,8 @@ func (s *studentRepo) SearchStudent(ctx context.Context, searchString string, pa
 	var results []models.Student
 
 	sortOptions := options.Find().SetSort(bson.M{sortBy.Column: sortDirection})
-	paginationOptions := options.Find().SetSkip(int64(pagination.Page)).SetLimit(int64(pagination.PageSize))
+	paginationOptions := options.Find().SetSkip(int64((pagination.Page - 1) * pagination.PageSize)).
+		SetLimit(int64(pagination.PageSize))
 
 	cursor, err := s.collection.Find(ctx,
 		bson.M{
@@ -163,6 +153,11 @@ func (s *studentRepo) SearchStudent(ctx context.Context, searchString string, pa
 		log.Error(err)
 		return nil, err
 	}
+
+	searchResp := models.StudentSearchData{
+		TotalElements: 0,
+		Data:          results,
+	}
 	log.Info("Students : ", results)
-	return nil, nil
+	return &searchResp, nil
 }

@@ -19,3 +19,15 @@ type StudentResponse struct {
 	Data    Student `json:"data,omitempty"`
 	Message string  `json:"message"`
 }
+
+type StudentListResponse struct {
+	Status  string  `json:"status"`
+	Data    Student `json:"data,omitempty"`
+	Message string  `json:"message"`
+}
+
+type StudentSearchResponse struct {
+	Status  string            `json:"status"`
+	Data    StudentSearchData `json:"data,omitempty"`
+	Message string            `json:"message"`
+}

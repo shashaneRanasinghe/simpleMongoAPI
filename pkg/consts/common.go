@@ -6,4 +6,7 @@ const (
 
 	ASC  = "ASC"
 	DESC = "DESC"
+
+	Error   = "Error"
+	Success = "Success"
 )

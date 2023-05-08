@@ -33,7 +33,7 @@ func (s studentUsecase) GetAllStudents(ctx context.Context) ([]models.Student, e
 
 	studentList, err := s.studentRepo.FindAllStudents(ctx)
 	if err != nil {
-		log.Debug(consts.GetStudentsError, err)
+		log.Debug(consts.StudentGetError, err)
 		return nil, err
 	}
 	return studentList, nil
@@ -43,7 +43,7 @@ func (s studentUsecase) GetStudent(ctx context.Context, id primitive.ObjectID) (
 
 	student, err := s.studentRepo.FindStudent(ctx, id)
 	if err != nil {
-		log.Debug(consts.GetStudentsError, err)
+		log.Debug(consts.StudentGetError, err)
 		return &models.Student{}, err
 	}
 	return student, nil
@@ -53,7 +53,7 @@ func (s studentUsecase) CreateStudent(ctx context.Context, student *models.Stude
 
 	st, err := s.studentRepo.CreateStudent(ctx, student)
 	if err != nil {
-		log.Debug(consts.GetStudentsError, err)
+		log.Debug(consts.StudentCreateError, err)
 		return &models.Student{}, err
 	}
 	return st, nil
@@ -63,7 +63,7 @@ func (s studentUsecase) UpdateStudent(ctx context.Context, student *models.Stude
 
 	st, err := s.studentRepo.UpdateStudent(ctx, student)
 	if err != nil {
-		log.Debug(consts.GetStudentsError, err)
+		log.Debug(consts.StudentUpdateError, err)
 		return &models.Student{}, err
 	}
 	return st, nil
@@ -74,7 +74,7 @@ func (s studentUsecase) SearchStudent(ctx context.Context, searchString string, 
 
 	studentList, err := s.studentRepo.SearchStudent(ctx, searchString, pagination, sortBy)
 	if err != nil {
-		log.Debug(consts.GetStudentsError, err)
+		log.Debug(consts.StudentGetError, err)
 		return nil, err
 	}
 	return studentList, nil

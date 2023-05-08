@@ -1,10 +1,10 @@
-type Query {
+extend type Query {
     getAllStudents: StudentListResponse!
     getStudent(studentID: ID!): StudentResponse!
     searchStudent(searchString: String, pagination: Pagination, sortBy: SortBy): StudentSearchResponse!
 }
 
-type Mutation {
+extend type Mutation {
     createStudent(student: StudentInput): StudentResponse!
     updateStudent(student: StudentInput): StudentResponse!
     deleteStudent(studentID: ID!): StudentDeleteResponse!

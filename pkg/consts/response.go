@@ -1,8 +1,15 @@
 package consts
 
 const (
-	GetStudentSuccess    = "Students Queried Successfully"
+	StudentGetSuccess    = "Students Queried Successfully"
 	DeleteStudentSuccess = "Student Deleted Successfully"
-	CreateStudentSuccess = "Student Created Successfully"
-	UpdateStudentSuccess = "Student Updated Successfully"
+	StudentCreateSuccess = "Student Created Successfully"
+	StudentUpdateSuccess = "Student Updated Successfully"
+)
+
+const (
+	LecturerGetSuccess    = "Lecturers Queried Successfully"
+	LecturerDeleteSuccess = "Lecturer Deleted Successfully"
+	LecturerCreateSuccess = "Lecturer Created Successfully"
+	LecturerUpdateSuccess = "Lecturer Updated Successfully"
 )

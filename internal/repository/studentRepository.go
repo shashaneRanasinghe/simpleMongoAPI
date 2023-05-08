@@ -52,7 +52,7 @@ func (s *studentRepo) FindAllStudents(ctx context.Context) ([]models.Student, er
 		log.Error(err)
 		return nil, err
 	}
-	log.Info("Students : ", results)
+	log.Info(consts.LogStudents, results)
 	return results, nil
 }
 
@@ -65,7 +65,7 @@ func (s *studentRepo) FindStudent(ctx context.Context, id primitive.ObjectID) (*
 		return nil, err
 	}
 
-	log.Info("Students : ", result)
+	log.Info(consts.LogStudents, result)
 	return &result, nil
 }
 
@@ -79,7 +79,7 @@ func (s *studentRepo) CreateStudent(ctx context.Context, student *models.Student
 		return nil, err
 	}
 
-	log.Info("Students : ", result.InsertedID)
+	log.Info(consts.LogStudents, result.InsertedID)
 	student.ID = result.InsertedID.(primitive.ObjectID)
 	return student, nil
 }
@@ -92,7 +92,7 @@ func (s *studentRepo) UpdateStudent(ctx context.Context, student *models.Student
 		return nil, err
 	}
 
-	log.Info("Students : ", student)
+	log.Info(consts.LogStudents, student)
 	return student, nil
 }
 
@@ -158,6 +158,6 @@ func (s *studentRepo) SearchStudent(ctx context.Context, searchString string, pa
 		TotalElements: 0,
 		Data:          results,
 	}
-	log.Info("Students : ", results)
+	log.Info(consts.LogStudents, results)
 	return &searchResp, nil
 }

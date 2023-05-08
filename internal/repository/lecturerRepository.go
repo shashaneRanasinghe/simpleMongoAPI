@@ -51,7 +51,7 @@ func (l lecturerRepo) FindAllLecturers(ctx context.Context) ([]models.Lecturer, 
 		log.Error(err)
 		return nil, err
 	}
-	log.Info("Lecturers : ", results)
+	log.Info(consts.LogLecturers, results)
 	return results, nil
 }
 
@@ -64,7 +64,7 @@ func (l lecturerRepo) FindLecturer(ctx context.Context, id primitive.ObjectID) (
 		return nil, err
 	}
 
-	log.Info("Lecturers : ", result)
+	log.Info(consts.LogLecturers, result)
 	return &result, nil
 }
 
@@ -78,7 +78,7 @@ func (l lecturerRepo) CreateLecturer(ctx context.Context, lecturer *models.Lectu
 		return nil, err
 	}
 
-	log.Info("Lecturers : ", result.InsertedID)
+	log.Info(consts.LogLecturers, result.InsertedID)
 	lecturer.ID = result.InsertedID.(primitive.ObjectID)
 	return lecturer, nil
 }
@@ -91,7 +91,7 @@ func (l lecturerRepo) UpdateLecturer(ctx context.Context, lecturer *models.Lectu
 		return nil, err
 	}
 
-	log.Info("Lecturers : ", lecturer)
+	log.Info(consts.LogLecturers, lecturer)
 	return lecturer, nil
 }
 
@@ -144,7 +144,7 @@ func (l lecturerRepo) SearchLecturer(ctx context.Context, searchString string, p
 		TotalElements: 0,
 		Data:          results,
 	}
-	log.Info("Lecturers : ", results)
+	log.Info(consts.LogLecturers, results)
 	return &searchResp, nil
 }
 

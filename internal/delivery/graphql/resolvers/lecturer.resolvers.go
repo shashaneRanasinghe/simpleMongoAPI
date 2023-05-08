@@ -42,7 +42,7 @@ func (r *mutationResolver) CreateLecturer(ctx context.Context, lecturer *models.
 
 	resp.Status = consts.Success
 	resp.Data = &respLecturer
-	resp.Message = consts.LecturerGetSuccess
+	resp.Message = consts.LecturerCreateSuccess
 	return &resp, err
 }
 

@@ -13,3 +13,8 @@ const (
 	LecturerCreateSuccess = "Lecturer Created Successfully"
 	LecturerUpdateSuccess = "Lecturer Updated Successfully"
 )
+
+const (
+	LogStudents  = "Students : "
+	LogLecturers = "Lecturers : "
+)

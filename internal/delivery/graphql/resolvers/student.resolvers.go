@@ -6,7 +6,7 @@ package resolvers
 
 import (
 	"context"
-	"github.com/shashaneRanasinghe/simpleMongoAPI/internal/delivery/graphql/generated"
+
 	"github.com/shashaneRanasinghe/simpleMongoAPI/internal/delivery/graphql/models"
 	models2 "github.com/shashaneRanasinghe/simpleMongoAPI/internal/models"
 	"github.com/shashaneRanasinghe/simpleMongoAPI/pkg/consts"
@@ -26,10 +26,10 @@ func (r *mutationResolver) CreateStudent(ctx context.Context, student *models.St
 
 	stResult, err := r.studentUsecase.CreateStudent(ctx, &st)
 	if err != nil {
-		log.Error(consts.GetStudentsError, err)
+		log.Error(consts.StudentCreateError, err)
 		resp.Status = consts.Error
 		resp.Data = nil
-		resp.Message = consts.GetStudentsError
+		resp.Message = consts.StudentCreateError
 		return &resp, err
 	}
 
@@ -42,7 +42,7 @@ func (r *mutationResolver) CreateStudent(ctx context.Context, student *models.St
 
 	resp.Status = consts.Success
 	resp.Data = &respStudent
-	resp.Message = consts.CreateStudentSuccess
+	resp.Message = consts.StudentCreateSuccess
 	return &resp, err
 }
 
@@ -66,10 +66,10 @@ func (r *mutationResolver) UpdateStudent(ctx context.Context, student *models.St
 
 	stResult, err := r.studentUsecase.UpdateStudent(ctx, &st)
 	if err != nil {
-		log.Error(consts.GetStudentsError, err)
+		log.Error(consts.StudentUpdateError, err)
 		resp.Status = consts.Error
 		resp.Data = nil
-		resp.Message = consts.GetStudentsError
+		resp.Message = consts.StudentUpdateError
 		return &resp, err
 	}
 
@@ -82,7 +82,7 @@ func (r *mutationResolver) UpdateStudent(ctx context.Context, student *models.St
 
 	resp.Status = consts.Success
 	resp.Data = &respStudent
-	resp.Message = consts.UpdateStudentSuccess
+	resp.Message = consts.StudentUpdateSuccess
 	return &resp, err
 }
 
@@ -115,10 +115,10 @@ func (r *queryResolver) GetAllStudents(ctx context.Context) (*models.StudentList
 
 	students, err := r.studentUsecase.GetAllStudents(ctx)
 	if err != nil {
-		log.Error(consts.GetStudentsError, err)
+		log.Error(consts.StudentGetError, err)
 		resp.Status = consts.Error
 		resp.Data = nil
-		resp.Message = consts.GetStudentsError
+		resp.Message = consts.StudentGetError
 		return &resp, err
 	}
 
@@ -134,7 +134,7 @@ func (r *queryResolver) GetAllStudents(ctx context.Context) (*models.StudentList
 
 	resp.Status = consts.Success
 	resp.Data = resStudents
-	resp.Message = consts.GetStudentSuccess
+	resp.Message = consts.StudentGetSuccess
 	return &resp, err
 }
 
@@ -150,9 +150,9 @@ func (r *queryResolver) GetStudent(ctx context.Context, studentID string) (*mode
 	}
 	reStudent, err := r.studentUsecase.GetStudent(ctx, id)
 	if err != nil {
-		log.Error(consts.GetStudentsError, err)
+		log.Error(consts.StudentGetError, err)
 		resp.Status = consts.Error
-		resp.Message = consts.GetStudentsError
+		resp.Message = consts.StudentGetError
 		return &resp, err
 	}
 	st := models.Student{
@@ -163,13 +163,12 @@ func (r *queryResolver) GetStudent(ctx context.Context, studentID string) (*mode
 	}
 	resp.Status = consts.Success
 	resp.Data = &st
-	resp.Message = consts.GetStudentSuccess
+	resp.Message = consts.StudentGetSuccess
 	return &resp, err
 }
 
 // SearchStudent is the resolver for the searchStudent field.
-func (r *queryResolver) SearchStudent(ctx context.Context, searchString *string, pagination *models.Pagination,
-	sortBy *models.SortBy) (*models.StudentSearchResponse, error) {
+func (r *queryResolver) SearchStudent(ctx context.Context, searchString *string, pagination *models.Pagination, sortBy *models.SortBy) (*models.StudentSearchResponse, error) {
 	var resp models.StudentSearchResponse
 	var studentSearch models.StudentSearch
 	var resStudents []*models.Student
@@ -185,9 +184,9 @@ func (r *queryResolver) SearchStudent(ctx context.Context, searchString *string,
 
 	searchResult, err := r.studentUsecase.SearchStudent(ctx, *searchString, paginationIn, sortByIn)
 	if err != nil {
-		log.Error(consts.GetStudentsError, err)
+		log.Error(consts.StudentGetError, err)
 		resp.Status = consts.Error
-		resp.Message = consts.GetStudentsError
+		resp.Message = consts.StudentGetError
 		return &resp, err
 	}
 	for _, st := range searchResult.Data {
@@ -205,15 +204,6 @@ func (r *queryResolver) SearchStudent(ctx context.Context, searchString *string,
 
 	resp.Status = consts.Success
 	resp.Data = &studentSearch
-	resp.Message = consts.GetStudentSuccess
+	resp.Message = consts.StudentGetSuccess
 	return &resp, err
 }
-
-// Mutation returns generated.MutationResolver implementation.
-func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
-
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
-
-type mutationResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }

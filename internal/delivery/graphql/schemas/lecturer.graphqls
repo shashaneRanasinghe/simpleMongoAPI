@@ -1,0 +1,54 @@
+extend type Query {
+    getAllLecturers: LecturerListResponse!
+    getLecturer(lecturerID: ID!): LecturerResponse!
+    searchLecturer(searchString: String, pagination: Pagination, sortBy: SortBy): LecturerSearchResponse!
+}
+
+extend type Mutation {
+    createLecturer(lecturer: LecturerInput): LecturerResponse!
+    updateLecturer(lecturer: LecturerInput): LecturerResponse!
+    deleteLecturer(lecturerID: ID!): LecturerDeleteResponse!
+}
+
+type Lecturer {
+    id: ID!
+    firstname: String!
+    lastname: String!
+    year: Int!
+}
+
+input LecturerInput {
+    id: ID
+    firstname: String
+    lastname: String
+    year: Int
+}
+
+type LecturerResponse {
+    status : String!
+    data: Lecturer
+    message: String!
+}
+
+type LecturerListResponse {
+    status : String!
+    data: [Lecturer]!
+    message: String!
+}
+
+type LecturerSearchResponse {
+    status : String!
+    data: LecturerSearch
+    message: String!
+}
+
+type LecturerSearch {
+    totalElements : Int!
+    data : [Lecturer]!
+}
+
+type LecturerDeleteResponse {
+    status: String!
+    ID: String
+    message: String!
+}

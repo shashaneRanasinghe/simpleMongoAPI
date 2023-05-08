@@ -1,28 +1,26 @@
 package consts
 
-//Handler Errors
+// Handler Errors
 const (
-	JSONMarshalError      = "Json Marshalling Error "
-	GetStudentsError      = "Error Getting Students "
-	ResponseWriteError    = "Error Writing Response "
-	RequestBodyReadError  = "Error Reading The Request Body"
-	RequestBodyCloseError = "Error Closing The Request Body"
-	IDError               = "Error Getting The ID"
-	ObjectIdConvertError  = "Error converting to ObjectID"
+	IDError              = "Error Getting The ID"
+	ObjectIdConvertError = "Error converting to ObjectID"
 )
 
-//DB ERRORS
+// DB ERRORS
 const (
-	QueryPrepareError  = "Error Preparing Query "
-	DBResultsError     = "Error Getting Results From The DB "
-	DBRowCloseError    = "Error Closing DB Rows "
-	DBScanRowError     = "Error Scanning DB Rows"
-	DBRowsError        = "Error In DB Rows"
-	DBResultIDError    = "Error Getting Insert ID "
 	DBCursorCloseError = "Error Closing Cursor "
 )
 
 const (
-	StudentNotFound    = "student Not Found"
+	StudentGetError    = "Error Getting Students "
+	StudentCreateError = "Error Creating Student"
+	StudentUpdateError = "Error Updating Student"
 	StudentDeleteError = "Error Deleting Student"
+)
+
+const (
+	LecturerGetError    = "Error Getting Students "
+	LecturerCreateError = "Error Creating Student"
+	LecturerUpdateError = "Error Updating Student"
+	LecturerDeleteError = "Error Deleting Student"
 )

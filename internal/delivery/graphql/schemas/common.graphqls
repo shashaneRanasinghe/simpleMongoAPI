@@ -1,3 +1,7 @@
+type Query
+
+type Mutation
+
 input Pagination {
     page: Int
     pageSize: Int
@@ -11,4 +15,8 @@ input SortBy {
 enum Direction {
     ASC
     DESC
+}
+
+type Test {
+    test: String
 }

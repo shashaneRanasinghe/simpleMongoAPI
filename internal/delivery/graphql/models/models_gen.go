@@ -8,6 +8,49 @@ import (
 	"strconv"
 )
 
+type Lecturer struct {
+	ID        string `json:"id"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Year      int    `json:"year"`
+}
+
+type LecturerDeleteResponse struct {
+	Status  string  `json:"status"`
+	ID      *string `json:"ID,omitempty"`
+	Message string  `json:"message"`
+}
+
+type LecturerInput struct {
+	ID        *string `json:"id,omitempty"`
+	Firstname *string `json:"firstname,omitempty"`
+	Lastname  *string `json:"lastname,omitempty"`
+	Year      *int    `json:"year,omitempty"`
+}
+
+type LecturerListResponse struct {
+	Status  string      `json:"status"`
+	Data    []*Lecturer `json:"data"`
+	Message string      `json:"message"`
+}
+
+type LecturerResponse struct {
+	Status  string    `json:"status"`
+	Data    *Lecturer `json:"data,omitempty"`
+	Message string    `json:"message"`
+}
+
+type LecturerSearch struct {
+	TotalElements int         `json:"totalElements"`
+	Data          []*Lecturer `json:"data"`
+}
+
+type LecturerSearchResponse struct {
+	Status  string          `json:"status"`
+	Data    *LecturerSearch `json:"data,omitempty"`
+	Message string          `json:"message"`
+}
+
 type Pagination struct {
 	Page     *int `json:"page,omitempty"`
 	PageSize *int `json:"pageSize,omitempty"`
@@ -59,6 +102,10 @@ type StudentSearchResponse struct {
 	Status  string         `json:"status"`
 	Data    *StudentSearch `json:"data,omitempty"`
 	Message string         `json:"message"`
+}
+
+type Test struct {
+	Test *string `json:"test,omitempty"`
 }
 
 type Direction string

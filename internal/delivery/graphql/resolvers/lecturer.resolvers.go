@@ -30,7 +30,7 @@ func (r *mutationResolver) CreateLecturer(ctx context.Context, lecturer *models.
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.LecturerGetError
-		return &resp, err
+		return &resp, nil
 	}
 
 	respLecturer := models.Lecturer{
@@ -43,7 +43,7 @@ func (r *mutationResolver) CreateLecturer(ctx context.Context, lecturer *models.
 	resp.Status = consts.Success
 	resp.Data = &respLecturer
 	resp.Message = consts.LecturerCreateSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // UpdateLecturer is the resolver for the updateLecturer field.
@@ -55,7 +55,7 @@ func (r *mutationResolver) UpdateLecturer(ctx context.Context, lecturer *models.
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.IDError
-		return &resp, err
+		return &resp, nil
 	}
 	st := models2.Lecturer{
 		ID:        id,
@@ -70,7 +70,7 @@ func (r *mutationResolver) UpdateLecturer(ctx context.Context, lecturer *models.
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.LecturerUpdateError
-		return &resp, err
+		return &resp, nil
 	}
 
 	respLecturer := models.Lecturer{
@@ -83,7 +83,7 @@ func (r *mutationResolver) UpdateLecturer(ctx context.Context, lecturer *models.
 	resp.Status = consts.Success
 	resp.Data = &respLecturer
 	resp.Message = consts.LecturerUpdateSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // DeleteLecturer is the resolver for the deleteLecturer field.
@@ -94,18 +94,18 @@ func (r *mutationResolver) DeleteLecturer(ctx context.Context, lecturerID string
 		log.Error(consts.ObjectIdConvertError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.ObjectIdConvertError
-		return &resp, err
+		return &resp, nil
 	}
 	err = r.lecturerUsecase.DeleteLecturer(ctx, id)
 	if err != nil {
 		log.Error(consts.LecturerDeleteError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.LecturerDeleteError
-		return &resp, err
+		return &resp, nil
 	}
 	resp.Status = consts.Success
 	resp.Message = consts.LecturerDeleteSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // GetAllLecturers is the resolver for the getAllLecturers field.
@@ -119,7 +119,7 @@ func (r *queryResolver) GetAllLecturers(ctx context.Context) (*models.LecturerLi
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.LecturerGetError
-		return &resp, err
+		return &resp, nil
 	}
 
 	for _, st := range lecturers {
@@ -135,7 +135,7 @@ func (r *queryResolver) GetAllLecturers(ctx context.Context) (*models.LecturerLi
 	resp.Status = consts.Success
 	resp.Data = resLecturers
 	resp.Message = consts.LecturerGetSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // GetLecturer is the resolver for the getLecturer field.
@@ -146,14 +146,14 @@ func (r *queryResolver) GetLecturer(ctx context.Context, lecturerID string) (*mo
 		log.Error(consts.ObjectIdConvertError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.ObjectIdConvertError
-		return &resp, err
+		return &resp, nil
 	}
 	reLecturer, err := r.lecturerUsecase.GetLecturer(ctx, id)
 	if err != nil {
 		log.Error(consts.LecturerGetError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.LecturerGetError
-		return &resp, err
+		return &resp, nil
 	}
 	st := models.Lecturer{
 		ID:        reLecturer.ID.Hex(),
@@ -164,7 +164,7 @@ func (r *queryResolver) GetLecturer(ctx context.Context, lecturerID string) (*mo
 	resp.Status = consts.Success
 	resp.Data = &st
 	resp.Message = consts.LecturerGetSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // SearchLecturer is the resolver for the searchLecturer field.
@@ -187,7 +187,7 @@ func (r *queryResolver) SearchLecturer(ctx context.Context, searchString *string
 		log.Error(consts.LecturerGetError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.LecturerGetError
-		return &resp, err
+		return &resp, nil
 	}
 	for _, st := range searchResult.Data {
 		resLecturer := models.Lecturer{
@@ -205,5 +205,5 @@ func (r *queryResolver) SearchLecturer(ctx context.Context, searchString *string
 	resp.Status = consts.Success
 	resp.Data = &lecturerSearch
 	resp.Message = consts.LecturerGetSuccess
-	return &resp, err
+	return &resp, nil
 }

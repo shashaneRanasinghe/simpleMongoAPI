@@ -30,7 +30,7 @@ func (r *mutationResolver) CreateStudent(ctx context.Context, student *models.St
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.StudentCreateError
-		return &resp, err
+		return &resp, nil
 	}
 
 	respStudent := models.Student{
@@ -43,7 +43,7 @@ func (r *mutationResolver) CreateStudent(ctx context.Context, student *models.St
 	resp.Status = consts.Success
 	resp.Data = &respStudent
 	resp.Message = consts.StudentCreateSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // UpdateStudent is the resolver for the updateStudent field.
@@ -55,7 +55,7 @@ func (r *mutationResolver) UpdateStudent(ctx context.Context, student *models.St
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.IDError
-		return &resp, err
+		return &resp, nil
 	}
 	st := models2.Student{
 		ID:        id,
@@ -70,7 +70,7 @@ func (r *mutationResolver) UpdateStudent(ctx context.Context, student *models.St
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.StudentUpdateError
-		return &resp, err
+		return &resp, nil
 	}
 
 	respStudent := models.Student{
@@ -83,7 +83,7 @@ func (r *mutationResolver) UpdateStudent(ctx context.Context, student *models.St
 	resp.Status = consts.Success
 	resp.Data = &respStudent
 	resp.Message = consts.StudentUpdateSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // DeleteStudent is the resolver for the deleteStudent field.
@@ -94,18 +94,18 @@ func (r *mutationResolver) DeleteStudent(ctx context.Context, studentID string) 
 		log.Error(consts.ObjectIdConvertError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.ObjectIdConvertError
-		return &resp, err
+		return &resp, nil
 	}
 	err = r.studentUsecase.DeleteStudent(ctx, id)
 	if err != nil {
 		log.Error(consts.StudentDeleteError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.StudentDeleteError
-		return &resp, err
+		return &resp, nil
 	}
 	resp.Status = consts.Success
 	resp.Message = consts.DeleteStudentSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // GetAllStudents is the resolver for the getAllStudents field.
@@ -119,7 +119,7 @@ func (r *queryResolver) GetAllStudents(ctx context.Context) (*models.StudentList
 		resp.Status = consts.Error
 		resp.Data = nil
 		resp.Message = consts.StudentGetError
-		return &resp, err
+		return &resp, nil
 	}
 
 	for _, st := range students {
@@ -135,7 +135,7 @@ func (r *queryResolver) GetAllStudents(ctx context.Context) (*models.StudentList
 	resp.Status = consts.Success
 	resp.Data = resStudents
 	resp.Message = consts.StudentGetSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // GetStudent is the resolver for the getStudent field.
@@ -146,14 +146,14 @@ func (r *queryResolver) GetStudent(ctx context.Context, studentID string) (*mode
 		log.Error(consts.ObjectIdConvertError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.ObjectIdConvertError
-		return &resp, err
+		return &resp, nil
 	}
 	reStudent, err := r.studentUsecase.GetStudent(ctx, id)
 	if err != nil {
 		log.Error(consts.StudentGetError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.StudentGetError
-		return &resp, err
+		return &resp, nil
 	}
 	st := models.Student{
 		ID:        reStudent.ID.Hex(),
@@ -164,7 +164,7 @@ func (r *queryResolver) GetStudent(ctx context.Context, studentID string) (*mode
 	resp.Status = consts.Success
 	resp.Data = &st
 	resp.Message = consts.StudentGetSuccess
-	return &resp, err
+	return &resp, nil
 }
 
 // SearchStudent is the resolver for the searchStudent field.
@@ -187,7 +187,7 @@ func (r *queryResolver) SearchStudent(ctx context.Context, searchString *string,
 		log.Error(consts.StudentGetError, err)
 		resp.Status = consts.Error
 		resp.Message = consts.StudentGetError
-		return &resp, err
+		return &resp, nil
 	}
 	for _, st := range searchResult.Data {
 		resStudent := models.Student{
@@ -205,5 +205,5 @@ func (r *queryResolver) SearchStudent(ctx context.Context, searchString *string,
 	resp.Status = consts.Success
 	resp.Data = &studentSearch
 	resp.Message = consts.StudentGetSuccess
-	return &resp, err
+	return &resp, nil
 }

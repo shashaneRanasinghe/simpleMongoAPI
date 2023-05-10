@@ -6,6 +6,20 @@ Using GraphQL and MongoDB
 ### How to run the application
 
 - Clone the repository
+- Navigate to the project directory: `cd simpleMongoAPI`
+- Create an `.env` file in the root directory of the project.
+- Populate the `.env` file with the required environment variables.
+Here's an example: 
+`PORT=:8080
+DB_URI={mongodb connection string}`
+
+#### Running using Docker
+
+- run `docker compose up`
+- to stop the application run `docker compose down`
+
+#### Running Locally
+
 - run `go build -o {binaryName} .\cmd\app\main.go` to build the binary
 - run `.\{binary name}` to run the binary (eg .\simpleAPI)
 

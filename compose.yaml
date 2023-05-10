@@ -1,0 +1,7 @@
+services:
+  api:
+    build: .
+    container_name: simpleMongoAPI
+    restart: always
+    ports:
+      - '8001:8001'

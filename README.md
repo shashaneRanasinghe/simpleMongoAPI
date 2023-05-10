@@ -8,10 +8,10 @@ Using GraphQL and MongoDB
 - Clone the repository
 - Navigate to the project directory: `cd simpleMongoAPI`
 - Create an `.env` file in the root directory of the project.
-- Populate the `.env` file with the required environment variables.
-Here's an example: 
-`PORT=:8080
-DB_URI={mongodb connection string}`
+- Populate the `.env` file with the required environment variables.<br>
+Here's an example: <br>
+`PORT=:8080`<br>
+`DB_URI={mongodb connection string}`
 
 #### Running using Docker
 

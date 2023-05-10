@@ -12,13 +12,14 @@ COPY go.sum ./
 RUN go mod download
 
 COPY . .
-RUN go build -o simpleMongoAPI .\cmd\app\main.go
+RUN go build -o simpleMongoAPI ./cmd/app
 
 ##
 ## Deploy
 ##
 
-FROM alpine:3.14.0
+FROM alpine:3.16.0
 WORKDIR /
-COPY --from=build /simpleMongoAPI /simpleMongoAPI
+COPY --from=build app/simpleMongoAPI /simpleMongoAPI
+COPY .env .env
 ENTRYPOINT ["/simpleMongoAPI"]

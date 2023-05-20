@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/shashaneRanasinghe/simpleMongoAPI/internal/delivery/graphql/generated"
 	"github.com/shashaneRanasinghe/simpleMongoAPI/internal/delivery/graphql/resolvers"
 	"github.com/shashaneRanasinghe/simpleMongoAPI/pkg/database"
@@ -33,6 +34,7 @@ func Serve() chan string {
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
+	http.Handle("/metrics", promhttp.Handler())
 
 	closeChannel := make(chan string)
 
